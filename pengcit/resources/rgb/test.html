@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'bootstrap/css/site.min.css' %}" rel="stylesheet"/>
+
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        <h1>RGB Counter</h1>
+        <div>
+            {% if show_image %}
+            <img src="{% static 'gambar.jpg' %}"/>
+            {% endif %}
+            <form action="{% url 'rgb.test' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Upload Gambar</label>
+                    <input name="file" type="file">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            Total number of pixels : {{count}}
+        </div>
+        <div>
+            Most frequent Pixels:
+            <ul>
+            {% for r,g,b,c in most_freq %}
+                <li style="background:rgb({{r}},{{g}},{{b}})">{{c}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
